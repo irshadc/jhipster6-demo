@@ -2,12 +2,8 @@ version: 0.2
 
 phases:
   install:  
-    runtime-versions:
-      java: corretto11
     commands:
-      - echo Entered the install phase...
-      - yum update all
-      - yum install -y maven
+      - yum update -y
     finally:
       - echo This always runs even if the update or install command fails 
   pre_build:
@@ -19,7 +15,9 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - mvn install
+      - ls
+      - pwd
+      - mvn package
     finally:
       - echo This always runs even if the install command fails
   post_build:
