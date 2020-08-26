@@ -21,10 +21,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
+
 /**
  * REST controller for managing {@link org.jhipster.blog.domain.Blog}.
  */
 @RestController
+@XRayEnabled
 @RequestMapping("/api")
 public class BlogResource {
 
