@@ -25,6 +25,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 
+import java.net.URL;
+
 import com.amazonaws.xray.AWSXRay;
 import com.amazonaws.xray.AWSXRayRecorderBuilder;
 import com.amazonaws.xray.plugins.EC2Plugin;
@@ -66,7 +68,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         try {
             AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin()).withPlugin(new ElasticBeanstalkPlugin());
 
-            URL ruleFile = WebConfig.class.getResource("/sampling-rules.json");
+            URL ruleFile = WebConfigurer.class.getResource("/sampling-rules.json");
             builder.withSamplingStrategy(new LocalizedSamplingStrategy(ruleFile));
 
             AWSXRay.setGlobalRecorder(builder.build());
