@@ -25,6 +25,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 
+import com.amazonaws.xray.AWSXRay;
+import com.amazonaws.xray.AWSXRayRecorderBuilder;
+import com.amazonaws.xray.plugins.EC2Plugin;
+import com.amazonaws.xray.plugins.ElasticBeanstalkPlugin;
+import com.amazonaws.xray.strategy.sampling.LocalizedSamplingStrategy;
+
 import static java.net.URLDecoder.decode;
 
 /**
@@ -57,6 +63,14 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
             initH2Console(servletContext);
         }
         log.info("Web application fully configured");
+        try {
+            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin()).withPlugin(new ElasticBeanstalkPlugin());
+
+            URL ruleFile = WebConfig.class.getResource("/sampling-rules.json");
+            builder.withSamplingStrategy(new LocalizedSamplingStrategy(ruleFile));
+
+            AWSXRay.setGlobalRecorder(builder.build());
+        } catch(Exception e) {log.error("Failed to initialize AWS X-Ray", e);}
     }
 
     /**
