@@ -26,10 +26,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
+
 /**
  * Service class for managing users.
  */
 @Service
+@XRayEnabled
 @Transactional
 public class UserService {
 
