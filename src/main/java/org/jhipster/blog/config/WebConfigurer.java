@@ -66,12 +66,14 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
         log.info("Web application fully configured");
         try {
-            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin()).withPlugin(new ElasticBeanstalkPlugin());
+            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin());
 
             URL ruleFile = WebConfigurer.class.getResource("/sampling-rules.json");
             builder.withSamplingStrategy(new LocalizedSamplingStrategy(ruleFile));
 
             AWSXRay.setGlobalRecorder(builder.build());
+             AWSXRay.beginSegment("Jhipster-Blog");
+            log.info("X-Ray worked");
         } catch(Exception e) {log.error("Failed to initialize AWS X-Ray", e);}
     }
 
