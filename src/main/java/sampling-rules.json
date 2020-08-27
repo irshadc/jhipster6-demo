@@ -5,7 +5,7 @@
       "description": "Blog.",
       "host": "*",
       "http_method": "*",
-      "url_path": "/api/blog/*",
+      "url_path": "/api/*",
       "fixed_target": 0,
       "rate": 0.05
     }
