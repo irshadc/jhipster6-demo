@@ -111,6 +111,16 @@
                 <scope>import</scope>
             </dependency>
             <!-- jhipster-needle-maven-add-dependency-management -->
+            <!--Xray -->
+             <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-xray-recorder-sdk-bom</artifactId>
+      <version>2.4.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+            
+            
         </dependencies>
     </dependencyManagement>
 
@@ -342,12 +352,33 @@
             <artifactId>aws-xray-recorder-sdk-core</artifactId>
             <version>1.2.1</version>
            </dependency>
-        <dependency> 
-            <groupId>com.amazonaws</groupId> 
-            <artifactId>aws-xray-recorder-sdk-spring</artifactId> 
-            <version>2.4.0</version> 
-        </dependency>
-    </dependencies>
+ <!-- XRay -->
+
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-xray-recorder-sdk-core</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-xray-recorder-sdk-apache-http</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-xray-recorder-sdk-aws-sdk</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-xray-recorder-sdk-aws-sdk-instrumentor</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-xray-recorder-sdk-sql-postgres</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-xray-recorder-sdk-sql-mysql</artifactId>
+  </dependency>
+</dependencies>
 
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
