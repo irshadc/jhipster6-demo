@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "description": "Resource creation.",
+      "service_name": "*",
+      "http_method": "POST",
+      "url_path": "/api/*",
+      "fixed_target": 1,
+      "rate": 1.0
+    },
+    {
+      "description": "resource get",
+      "service_name": "*",
+      "http_method": "GET",
+      "url_path": "/api/*",
+      "fixed_target": 0,
+      "rate": 0.05
+    },
+    {
+      "description": "user listing.",
+      "service_name": "*",
+      "http_method": "GET",
+      "url_path": "/api/user/*/*",
+      "fixed_target": 0,
+      "rate": 0.05
+    },
+    {
+      "description": "blog listing.",
+      "service_name": "*",
+      "http_method": "GET",
+      "url_path": "/api/blog/*/*/*",
+      "fixed_target": 0,
+      "rate": 0.05
+    }
+  ],
+  "default": {
+    "fixed_target": 1,
+    "rate": 0.1
+  }
+}
