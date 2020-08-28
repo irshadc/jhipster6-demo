@@ -1,37 +1,35 @@
 version: 0.2
-
 phases:
-  install:  
-    commands:
-      - yum update -y
-    finally:
-      - echo This always runs even if the update or install command fails 
+  install:
+    runtime-versions:
+      docker: 18
+      java: 11
+      
   pre_build:
     commands:
-      - echo Entered the pre_build phase.
-    finally:
-      - echo This always runs even if the login command fails 
+      - yum update -y
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - echo Entered the build phase...
       - echo Build started on `date`
-      - ls
-      - pwd
-      - mvn package
-    finally:
-      - echo This always runs even if the install command fails
+      - echo Building Docker test image...
+      - ./mvnw package -Pdev -DskipTests
+      - cp target/blog-0.0.1-SNAPSHOT.jar docker/
+      - cd docker
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
-      - echo Entered the post_build phase...
       - echo Build completed on `date`
-      - ls
-      - pwd
-      - cd target
-      - ls
-artifacts:
-  files:
-    - target/blog-0.0.1-SNAPSHOT.jar
-  discard-paths: yes
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+  artifacts:
+    files:
+      - target/blog-0.0.1-SNAPSHOT.jar
+    discard-paths: yes
 cache:
   paths:
     - '/root/.m2/**/*'
