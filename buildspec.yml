@@ -13,10 +13,9 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building Docker test image...
-      - #./mvnw package -Pdev -DskipTests
-      - #cp target/blog-0.0.1-SNAPSHOT.jar docker/
+      - ./mvnw package -Pdev -DskipTests
+      - cp target/blog-0.0.1-SNAPSHOT.jar docker/
       - cd docker
-      - touch blog-0.0.1-SNAPSHOT.jar
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
@@ -30,8 +29,6 @@ phases:
       - sed -i -e "s|CONTAINER_NAME|$CONTAINER_NAME|g" imagedefinitions.json
       - sed -i -e "s|IMAGE_URI|$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG|g" imagedefinitions.json
       - cat imagedefinitions.json
-      - pwd
-      - ls
 artifacts:
   files:
     - docker/imagedefinitions.json
