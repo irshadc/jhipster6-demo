@@ -9,7 +9,6 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-      - yum install jq -y
   build:
     commands:
       - echo Build started on `date`
@@ -26,14 +25,12 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image $IMAGE_REPO_NAME:$IMAGE_TAG ....
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - ImageURI=$(cat imageDetail.json | jq -r '.ImageURI')
       - printf '[{"name":"CONTAINER_NAME","imageUri":"IMAGE_URI"}]' > imagedefinitions.json
       - sed -i -e "s|CONTAINER_NAME|$CONTAINER_NAME|g" imagedefinitions.json
-      - sed -i -e "s|IMAGE_URI|$ImageURI|g" imagedefinitions.json
+      - sed -i -e "s|IMAGE_URI| $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG|g" imagedefinitions.json
       - cat imagedefinitions.json
 artifacts:
   files:
-    - target/blog-0.0.1-SNAPSHOT.jar
     - imagedefinitions.json
   discard-paths: yes
 cache:
