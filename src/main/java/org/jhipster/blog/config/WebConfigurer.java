@@ -30,8 +30,8 @@ import java.net.URL;
 import com.amazonaws.xray.AWSXRay;
 import com.amazonaws.xray.AWSXRayRecorderBuilder;
 import com.amazonaws.xray.plugins.EC2Plugin;
-import com.amazonaws.xray.plugins.ElasticBeanstalkPlugin;
-import com.amazonaws.xray.strategy.sampling.LocalizedSamplingStrategy;
+import com.amazonaws.xray.plugins.ECSPlugin;
+import com.amazonaws.xray.strategy.sampling.CentralizedSamplingStrategy;
 
 import static java.net.URLDecoder.decode;
 
@@ -66,10 +66,10 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
         log.info("Web application fully configured");
         try {
-            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin());
+            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin()).withPlugin(new ECSPlugin());
 
             URL ruleFile = WebConfigurer.class.getResource("/sampling-rules.json");
-            builder.withSamplingStrategy(new LocalizedSamplingStrategy(ruleFile));
+            builder.withSamplingStrategy(new CentralizedSamplingStrategy(ruleFile));
 
             AWSXRay.setGlobalRecorder(builder.build());
              AWSXRay.beginSegment("Jhipster-Blog");
