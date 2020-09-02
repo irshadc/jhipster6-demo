@@ -66,7 +66,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
         log.info("Web application fully configured");
         try {
-            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin()).withPlugin(new ECSPlugin());
+            AWSXRayRecorderBuilder builder = AWSXRayRecorderBuilder.standard().withPlugin(new EC2Plugin()).withPlugin(new ECSPlugin())
+                                                                              .withSegmentListener(new SLF4JSegmentListener("JB-XRAY"));
 
             URL ruleFile = WebConfigurer.class.getResource("/sampling-rules.json");
             builder.withSamplingStrategy(new CentralizedSamplingStrategy(ruleFile));
