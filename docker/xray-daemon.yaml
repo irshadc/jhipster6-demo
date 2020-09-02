@@ -1,0 +1,10 @@
+Socket:
+  UDPAddress: "127.0.0.1:2000"
+  TCPAddress: "127.0.0.1:2000"
+Region: "ap-south-1"
+Logging:
+  LogLevel: "debug"
+  LogPath: "/var/log/xray-daemon.log"
+LocalMode: true
+RoleARN: "arn:aws:iam::401096567452:role/ecsTaskExecutionRole"
+Version: 2
