@@ -33,6 +33,8 @@ import com.amazonaws.xray.plugins.EC2Plugin;
 import com.amazonaws.xray.plugins.ECSPlugin;
 import com.amazonaws.xray.strategy.sampling.CentralizedSamplingStrategy;
 
+import com.amazonaws.xray.slf4j.SLF4JSegmentListener;
+
 import static java.net.URLDecoder.decode;
 
 /**
