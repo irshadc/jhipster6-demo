@@ -1,6 +1,6 @@
 {
   "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::401096567452:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::$AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
@@ -10,7 +10,7 @@
         "secretOptions": null,
         "options": {
           "awslogs-group": "/ecs/blog-demo-td",
-          "awslogs-region": "ap-south-1",
+          "awslogs-region": "$AWS_DEFAULT_REGION",
           "awslogs-stream-prefix": "ecs"
         }
       },
@@ -28,15 +28,15 @@
       "environment": [
         {
           "name": "BLOG_DB_NAME",
-          "value": "blog"
+          "value": "$BLOG_DB_NAME"
         },
         {
           "name": "BLOG_DB_PASWORD",
-          "value": ""
+          "value": "$BLOG_DB_PASWORD"
         },
         {
           "name": "BLOG_DB_URL",
-          "value": "jdbc:h2:file:./target/h2db/db/blog;DB_CLOSE_DELAY=-1"
+          "value": "$BLOG_DB_URL"
         }
       ],
       "resourceRequirements": null,
@@ -50,7 +50,7 @@
       "memoryReservation": 256,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "401096567452.dkr.ecr.ap-south-1.amazonaws.com/jhipster-blog:0.0.1",
+      "image": "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_NAME:0.0.1",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -67,17 +67,17 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "jhipster-blog"
+      "name": "$CONTAINER_NAME"
     }
   ],
   "placementConstraints": [],
   "memory": "1024",
-  "taskRoleArn": "arn:aws:iam::401096567452:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::$AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
   "compatibilities": [
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:401096567452:task-definition/blog-demo-td:1",
+  "taskDefinitionArn": "arn:aws:ecs:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:task-definition/blog-demo-td:1",
   "family": "blog-demo-td",
   "requiresAttributes": [
     {
