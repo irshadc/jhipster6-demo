@@ -39,6 +39,7 @@ artifacts:
     - docker/imagedefinitions.json
     - appspec.yml
     - container-task-def.json
+    - ImageDetails.json
   discard-paths: yes
 cache:
   paths:
