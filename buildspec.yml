@@ -35,14 +35,14 @@ phases:
       
       - sed -i -e "s|<AWS_DEFAULT_REGION>|$AWS_DEFAULT_REGION|g" appspec.yaml
       - sed -i -e "s|<AWS_ACCOUNT_ID>|$AWS_ACCOUNT_ID|g" appspec.yaml
-      - sed -i -e "s|<TASK_DEF_NAME>|$TASK_DEF_NAME|g" appspec.yaml
-      - sed -i -e "s|<CONTAINTER_NAME>|$CONTAINTER_NAME|g" appspec.yaml
+      - sed -i -e "s|<TASK_DEFINITION_NAME>|$TASK_DEFINITION_NAME|g" appspec.yaml
+      - sed -i -e "s|<CONTAINER_NAME>|$CONTAINER_NAME|g" appspec.yaml
       
       - sed -i -e "s|<IMAGE_URI>|$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG|g" imageDetail.json
       
       - sed -i -e "s|<AWS_DEFAULT_REGION>|$AWS_DEFAULT_REGION|g" taskdef.json
       - sed -i -e "s|<AWS_ACCOUNT_ID>|$AWS_ACCOUNT_ID|g" taskdef.json
-      - sed -i -e "s|<CONTAINTER_NAME>|$CONTAINTER_NAME|g" taskdef.json
+      - sed -i -e "s|<CONTAINER_NAME>|$CONTAINER_NAME|g" taskdef.json
       - sed -i -e "s|<IMAGE_TAG>|$IMAGE_TAG|g" taskdef.json
       - whoami
       - pwd

@@ -3,7 +3,7 @@ Resources:
   - TargetService:
       Type: AWS::ECS::Service
       Properties:
-        TaskDefinition: "arn:aws:ecs:<AWS_DEFAULT_REGION>:<AWS_ACCOUNT_ID>:task-definition/<TASK_DEF_NAME>"
+        TaskDefinition: "arn:aws:ecs:<AWS_DEFAULT_REGION>:<AWS_ACCOUNT_ID>:task-definition/<TASK_DEFINITION_NAME>"
         LoadBalancerInfo:
           ContainerName: "jhipster-blog"
           ContainerPort: 80
