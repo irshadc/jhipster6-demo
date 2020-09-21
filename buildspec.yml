@@ -37,6 +37,8 @@ phases:
 artifacts:
   files:
     - docker/imagedefinitions.json
+    - appspec.yml
+    - container-task-def.json
   discard-paths: yes
 cache:
   paths:
