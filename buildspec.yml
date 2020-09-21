@@ -15,7 +15,7 @@ phases:
       - echo Building Docker test image...
       - #./mvnw package -Pdev -DskipTests
       - #cp target/blog-0.0.1-SNAPSHOT.jar docker/
-      - #cd docker
+      - cd docker
       - #echo adding xray daemon
       - #mkdir xray-daemon && cd xray-daemon
       - #curl https://s3.dualstack.ap-south-1.amazonaws.com/aws-xray-assets.ap-south-1/xray-daemon/aws-xray-daemon-linux-3.x.zip -o ./aws-xray-daemon-linux-3.x.zip
