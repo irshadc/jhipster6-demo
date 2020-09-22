@@ -7,3 +7,10 @@ Resources:
         LoadBalancerInfo:
           ContainerName: "<CONTAINER_NAME>"
           ContainerPort: 80
+# Optional properties
+#        PlatformVersion: "LATEST"
+#        NetworkConfiguration:
+#            AwsvpcConfiguration:
+#              Subnets: ["subnet-0225f723a98bdb638","subnet-0ea8c912ce0c881bf","subnet-0225f723a98bdb638"]
+#              SecurityGroups: ["sg-81f736e5"]
+#              AssignPublicIp: "ENABLED"
