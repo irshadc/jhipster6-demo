@@ -9,7 +9,6 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-      - This is your footer
   build:
     commands:
       - echo Build started on `date`
