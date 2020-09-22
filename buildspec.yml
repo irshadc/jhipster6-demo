@@ -14,7 +14,7 @@ phases:
       - echo Build started on `date`
       - IMAGE_TAG=$(date +"%d%mT%H%M")
       - pwd && ls -la 
-      - sed -i -e "s|This is your footer|This is your footer generated at $IMAGE_TAG|g" src/main/webapp/layouts/footer/footer.component.html
+      - sed -i -e "s|This is your footer|This is your footer generated at $IMAGE_TAG|g" ./src/main/webapp/layouts/footer/footer.component.html
       
       - echo setting TAG $IMAGE_TAG for the docker image.
       - ./mvnw package -Pdev -DskipTests
