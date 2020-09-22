@@ -9,10 +9,14 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - This is your footer
   build:
     commands:
       - echo Build started on `date`
       - IMAGE_TAG=$(date +"%d%mT%H%M")
+       
+      - sed -i -e "s|This is your footer|This is your footer generated at $IMAGE_TAG|g" src/main/webapp/layouts/footer/footer.component.html
+      
       - echo setting TAG $IMAGE_TAG for the docker image.
       - ./mvnw package -Pdev -DskipTests
       - cp target/blog-0.0.1-SNAPSHOT.jar docker/
@@ -45,9 +49,7 @@ phases:
       - sed -i -e "s|<AWS_ACCOUNT_ID>|$AWS_ACCOUNT_ID|g" taskdef.json
       - sed -i -e "s|<CONTAINER_NAME>|$CONTAINER_NAME|g" taskdef.json
       - sed -i -e "s|<IMAGE_TAG>|$IMAGE_TAG|g" taskdef.json
-      - whoami
-      - pwd
-     
+      - cd ..
 artifacts:
   files:
     - pipeline/appspec.yaml
@@ -57,3 +59,4 @@ artifacts:
 cache:
   paths:
     - '/root/.m2/**/*'
+    - 'node_modules/**/*'
