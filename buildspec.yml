@@ -4,7 +4,7 @@ phases:
     runtime-versions:
       docker: 19
       java: corretto11
-      
+
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -13,9 +13,9 @@ phases:
     commands:
       - echo Build started on `date`
       - IMAGE_TAG=$(date +"%d%mT%H%M")
-      
+
       - sed -i -e "s|2nd footer|Built on ECS and generated at $IMAGE_TAG|g" src/main/webapp/app/layouts/footer/footer.component.html
-      
+
       - echo setting TAG $IMAGE_TAG for the docker image.
       - ./mvnw package -Pdev
       - cp target/blog-0.0.1-SNAPSHOT.jar docker/
@@ -24,7 +24,7 @@ phases:
       - mkdir xray-daemon && cd xray-daemon
       - curl https://s3.dualstack.ap-south-1.amazonaws.com/aws-xray-assets.ap-south-1/xray-daemon/aws-xray-daemon-linux-3.x.zip -o ./aws-xray-daemon-linux-3.x.zip
       - unzip -o aws-xray-daemon-linux-3.x.zip -d .
-      - cd ..      
+      - cd ..
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
@@ -34,16 +34,16 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image $IMAGE_REPO_NAME:$IMAGE_TAG ....
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-    
+
       - cd ../pipeline
-      
+
       - sed -i -e "s|<AWS_DEFAULT_REGION>|$AWS_DEFAULT_REGION|g" appspec.yaml
       - sed -i -e "s|<AWS_ACCOUNT_ID>|$AWS_ACCOUNT_ID|g" appspec.yaml
-      - #sed -i -e "s|<TASK_DEFINITION_NAME>|$TASK_DEFINITION_NAME|g" appspec.yaml
+      -  #sed -i -e "s|<TASK_DEFINITION_NAME>|$TASK_DEFINITION_NAME|g" appspec.yaml
       - sed -i -e "s|<CONTAINER_NAME>|$CONTAINER_NAME|g" appspec.yaml
-      
+
       - sed -i -e "s|<IMAGE_URI>|$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG|g" imageDetail.json
-      
+
       - sed -i -e "s|<AWS_DEFAULT_REGION>|$AWS_DEFAULT_REGION|g" taskdef.json
       - sed -i -e "s|<AWS_ACCOUNT_ID>|$AWS_ACCOUNT_ID|g" taskdef.json
       - sed -i -e "s|<CONTAINER_NAME>|$CONTAINER_NAME|g" taskdef.json
@@ -55,6 +55,11 @@ artifacts:
     - pipeline/taskdef.json
     - pipeline/imageDetail.json
   discard-paths: yes
+reports:
+  jacoco-report:
+    files:
+      - 'target/jacoco/jacoco.xml'
+    file-format: 'JACOCOXML'
 cache:
   paths:
     - '/root/.m2/**/*'
