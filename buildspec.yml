@@ -17,7 +17,7 @@ phases:
       - sed -i -e "s|2nd footer|Built on ECS and generated at $IMAGE_TAG|g" src/main/webapp/app/layouts/footer/footer.component.html
       
       - echo setting TAG $IMAGE_TAG for the docker image.
-      - ./mvnw package -Pdev -DskipTests
+      - ./mvnw package -Pdev
       - cp target/blog-0.0.1-SNAPSHOT.jar docker/
       - cd docker
       - echo adding xray daemon
